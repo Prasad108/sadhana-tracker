@@ -1,12 +1,11 @@
+import './App.css';
+
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { signInWithGoogle, signOut } from './actions/authActions';
+import { useDispatch } from 'react-redux';
 import { auth } from './firebase-config'; // Import the auth object from your firebase config file
+import Navbar from './components/Navbar';
 
 const App = () => {
-  const user = useSelector((state) => state.auth.user);
-  const isLoading = useSelector((state) => state.auth.isLoading);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,28 +23,9 @@ const App = () => {
     return unsubscribe;
   }, [dispatch]);
 
-  const handleSignIn = () => {
-    dispatch(signInWithGoogle());
-  };
-
-  const handleSignOut = () => {
-    dispatch(signOut());
-  };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
-      {user ? (
-        <div>
-          <h1>Welcome, {user.displayName}!</h1>
-          <button onClick={handleSignOut}>Sign out</button>
-        </div>
-      ) : (
-        <button onClick={handleSignIn}>Sign in with Google</button>
-      )}
+      <Navbar />
     </div>
   );
 };

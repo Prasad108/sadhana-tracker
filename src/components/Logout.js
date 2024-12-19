@@ -1,13 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { signOut } from '../actions/authActions';
-import { connect } from 'react-redux';
 
-const Logout = ({ signOut }) => {
+const Logout = () => {
+  const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
+
   return (
     <div>
-      <button onClick={signOut}>Sign Out</button>
+      <button onClick={handleSignOut}>Sign out</button>
     </div>
   );
 };
 
-export default connect(null, { signOut })(Logout);
+export default Logout;
