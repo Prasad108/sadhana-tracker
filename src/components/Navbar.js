@@ -8,8 +8,12 @@ const Navbar = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
 
   if (isLoading) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="flex justify-center items-center h-screen">
+          <p className="text-lg text-gray-700">Loading...</p>
+        </div>
+      );
+      }
 
   return (
     <div>
