@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/sadhana-tracker/static/css/main.dd9e2b78.css",
-    "main.js": "/sadhana-tracker/static/js/main.816146f9.js",
+    "main.css": "/sadhana-tracker/static/css/main.dda7602b.css",
+    "main.js": "/sadhana-tracker/static/js/main.5a099287.js",
     "static/js/488.8c089bea.chunk.js": "/sadhana-tracker/static/js/488.8c089bea.chunk.js",
     "index.html": "/sadhana-tracker/index.html",
-    "main.dd9e2b78.css.map": "/sadhana-tracker/static/css/main.dd9e2b78.css.map",
-    "main.816146f9.js.map": "/sadhana-tracker/static/js/main.816146f9.js.map",
+    "main.dda7602b.css.map": "/sadhana-tracker/static/css/main.dda7602b.css.map",
+    "main.5a099287.js.map": "/sadhana-tracker/static/js/main.5a099287.js.map",
     "488.8c089bea.chunk.js.map": "/sadhana-tracker/static/js/488.8c089bea.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dd9e2b78.css",
-    "static/js/main.816146f9.js"
+    "static/css/main.dda7602b.css",
+    "static/js/main.5a099287.js"
   ]
 }
