@@ -1,34 +1,50 @@
-import React, { useState } from "react";
-import { signInWithGoogle, logOut, getCurrentUser } from "./Auth";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { signInWithGoogle, signOut } from './actions/authActions';
+import { auth } from './firebase-config'; // Import the auth object from your firebase config file
 
 const App = () => {
-  const [user, setUser] = useState(getCurrentUser());
+  const user = useSelector((state) => state.auth.user);
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
-  const handleLogin = async () => {
-    try {
-      const user = await signInWithGoogle();
-      setUser(user);
-    } catch (error) {
-      console.error(error);
-    }
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: 'SET_LOADING' }); // Set initial state to loading
+
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        // User is signed in
+        dispatch({ type: 'SIGN_IN_SUCCESS', payload: currentUser });
+      } else {
+        // No user is signed in
+        dispatch({ type: 'SIGN_OUT' });
+      }
+    });
+    return unsubscribe;
+  }, [dispatch]);
+
+  const handleSignIn = () => {
+    dispatch(signInWithGoogle());
   };
 
-  const handleLogout = async () => {
-    await logOut();
-    setUser(null);
+  const handleSignOut = () => {
+    dispatch(signOut());
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <h1>Sadhana Tracker</h1>
       {user ? (
         <div>
-          <p>Welcome, {user.displayName}</p>
-          <p>Email: {user.email}</p>
-          <button onClick={handleLogout}>Sign Out</button>
+          <h1>Welcome, {user.displayName}!</h1>
+          <button onClick={handleSignOut}>Sign out</button>
         </div>
       ) : (
-        <button onClick={handleLogin}>Sign In with Google</button>
+        <button onClick={handleSignIn}>Sign in with Google</button>
       )}
     </div>
   );
