@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/sadhana-tracker/static/css/main.dd9e2b78.css",
+    "main.js": "/sadhana-tracker/static/js/main.816146f9.js",
+    "static/js/488.8c089bea.chunk.js": "/sadhana-tracker/static/js/488.8c089bea.chunk.js",
+    "index.html": "/sadhana-tracker/index.html",
+    "main.dd9e2b78.css.map": "/sadhana-tracker/static/css/main.dd9e2b78.css.map",
+    "main.816146f9.js.map": "/sadhana-tracker/static/js/main.816146f9.js.map",
+    "488.8c089bea.chunk.js.map": "/sadhana-tracker/static/js/488.8c089bea.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dd9e2b78.css",
+    "static/js/main.816146f9.js"
+  ]
+}
