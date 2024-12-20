@@ -4,7 +4,7 @@ A web application to track daily sadhana activities.
 
 ## Application URL
 
-[([link unavailable](https://Prasad108.github.io/sadhana-tracker/))]((https://Prasad108.github.io/sadhana-tracker/))
+[([https://Prasad108.github.io/sadhana-tracker/](https://Prasad108.github.io/sadhana-tracker/))]((https://Prasad108.github.io/sadhana-tracker/))
 
 In the project directory, you can run:
 
