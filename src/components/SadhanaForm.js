@@ -6,7 +6,6 @@ const SadhanaForm = () => {
   const user = useSelector((state) => state.auth.user);
 
   const getInitialState = () => {
-
     const now = new Date();
     const ISTOffset = 330; // IST is UTC+5:30
     const istNow = new Date(now.getTime() + ISTOffset * 60 * 1000);
@@ -22,6 +21,14 @@ const SadhanaForm = () => {
   };
 
   const [sadhana, setSadhana] = useState(getInitialState());
+  const [message, setMessage] = useState({ type: '', text: '' });
+
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => {
+      setMessage({ type: '', text: '' }); // Clear message after 3 seconds
+    }, 3000);
+  };
 
   const handleToggle = (field) => {
     setSadhana((prevSadhana) => ({
@@ -34,20 +41,15 @@ const SadhanaForm = () => {
     e.preventDefault();
     try {
       await submitSadhanaDetails(sadhana);
-      alert('Sadhana details submitted successfully!');
+      showMessage('success', 'Details submitted successfully!');
       setSadhana(getInitialState()); // Reset state after successful submission
     } catch (error) {
-      alert('Failed to submit Sadhana details. Please try again later.');
+      showMessage('error', 'Submission failed. Try again.');
     }
   };
 
   const handleDateChange = (e) => {
     const newDate = e.target.value;
-    setSadhana((prevSadhana) => ({
-      ...prevSadhana,
-      date: newDate,
-    }));
-    // Reset state when the date changes
     setSadhana((prevSadhana) => ({
       ...getInitialState(),
       date: newDate,
@@ -57,6 +59,20 @@ const SadhanaForm = () => {
   return (
     <div className="max-w-md mx-auto p-4">
       <h2 className="text-lg font-bold mb-4">Sadhana Form</h2>
+
+      {/* Message Display */}
+      {message.text && (
+        <div
+          className={`mb-4 p-2 rounded text-sm ${
+            message.type === 'success'
+              ? 'bg-green-100 text-green-700 border border-green-400'
+              : 'bg-red-100 text-red-700 border border-red-400'
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         {/* Date Field */}
         <div className="mb-4">
