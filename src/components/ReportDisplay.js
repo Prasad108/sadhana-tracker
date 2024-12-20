@@ -5,7 +5,7 @@ const ReportDisplay = ({ report, startDate, endDate }) => {
   const records = report.records;
 
   return (
-    <div className="mt-4 p-4 border border-gray-300 rounded">
+    <div >
       <p className="text-md text-gray-700 mb-4">
         From: <span className="font-bold">{startDate}</span> To: <span className="font-bold">{endDate}</span>
       </p>
@@ -14,11 +14,11 @@ const ReportDisplay = ({ report, startDate, endDate }) => {
           <thead>
             <tr className="bg-gray-100">
               <th className="px-2 py-2 border border-gray-300">Date</th>
-              <th className="px-2 py-2 border border-gray-300 rotate-text">Chanting<br />Completed</th>
-              <th className="px-2 py-2 border border-gray-300 rotate-text">Guru<br />Maharaj Lecture</th>
-              <th className="px-2 py-2 border border-gray-300 rotate-text">Mangal<br />Aarti Attended</th>
-              <th className="px-2 py-2 border border-gray-300 rotate-text">S.P.<br />Lecture</th>
-              <th className="px-2 py-2 border border-gray-300 rotate-text">Reading<br />Completed</th>
+              <th className="px-2 py-2 border border-gray-300 rotate-text">Japa<br />By</th>
+              <th className="px-2 py-2 border border-gray-300 rotate-text">Guru<br />Lect</th>
+              <th className="px-2 py-2 border border-gray-300 rotate-text">M.<br />Aarti</th>
+              <th className="px-2 py-2 border border-gray-300 rotate-text">S.P.<br />Lect</th>
+              <th className="px-2 py-2 border border-gray-300 rotate-text">Read</th>
             </tr>
           </thead>
           <tbody>
@@ -34,16 +34,16 @@ const ReportDisplay = ({ report, startDate, endDate }) => {
                     {record ? record.chantingCompleted : '-'}
                   </td>
                   <td className="px-2 py-2 border border-gray-300">
-                    {record ? (record.guruMaharajLecture ? 'Yes' : 'No') : '-'}
+                    {record ? (record.guruMaharajLecture ? '✔' : '✖') : '-'}
                   </td>
                   <td className="px-2 py-2 border border-gray-300">
-                    {record ? (record.mangalAartiAttended ? 'Yes' : 'No') : '-'}
+                    {record ? (record.mangalAartiAttended ? '✔' : '✖') : '-'}
                   </td>
                   <td className="px-2 py-2 border border-gray-300">
-                    {record ? (record.prabhupadaLecture ? 'Yes' : 'No') : '-'}
+                    {record ? (record.prabhupadaLecture ? '✔' : '✖') : '-'}
                   </td>
                   <td className="px-2 py-2 border border-gray-300">
-                    {record ? (record.readingCompleted ? 'Yes' : 'No') : '-'}
+                    {record ? (record.readingCompleted ? '✔' : '✖') : '-'}
                   </td>
                 </tr>
               );

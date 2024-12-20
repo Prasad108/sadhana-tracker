@@ -5,9 +5,7 @@ import * as types from './types';
 export const signInWithGoogle = () => async (dispatch) => {
   try {
     dispatch({ type: 'SET_LOADING', payload: true });
-
     const result = await signInWithGooglePopup();
-    console.log('user',result.user)
     dispatch({ type: types.SIGN_IN_SUCCESS, payload: result.user });
 
   } catch (error) {

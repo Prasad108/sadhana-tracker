@@ -76,7 +76,7 @@ const SadhanaReport = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div >
       {/* <h1 className="text-2xl font-bold mb-4">Sadhana Report</h1> */}
       {!viewReport ? (
         <>
