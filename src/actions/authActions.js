@@ -7,6 +7,7 @@ export const signInWithGoogle = () => async (dispatch) => {
     dispatch({ type: 'SET_LOADING', payload: true });
 
     const result = await signInWithGooglePopup();
+    console.log('user',result.user)
     dispatch({ type: types.SIGN_IN_SUCCESS, payload: result.user });
 
   } catch (error) {

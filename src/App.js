@@ -13,6 +13,11 @@ const App = () => {
 
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       if (currentUser) {
+        console.log('user',currentUser)
+
+        currentUser.getIdToken().then((token) => {
+          console.log(token);
+        });
         // User is signed in
         dispatch({ type: 'SIGN_IN_SUCCESS', payload: currentUser });
       } else {
