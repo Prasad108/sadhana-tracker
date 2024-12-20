@@ -5,20 +5,23 @@ import { submitSadhanaDetails } from '../api/api';
 const SadhanaForm = () => {
   const user = useSelector((state) => state.auth.user);
 
-  const getCurrentTime = () => {
+  const getInitialState = () => {
+
     const now = new Date();
-    return now.toISOString().slice(11, 16); // Format as "HH:MM"
+    const ISTOffset = 330; // IST is UTC+5:30
+    const istNow = new Date(now.getTime() + ISTOffset * 60 * 1000);
+    return {
+      date: now.toISOString().slice(0, 10), // Default to today's date
+      chantingCompleted: istNow.toISOString().slice(11, 16), // Default to current time
+      uid: user.uid, // User ID from Redux store
+      readingCompleted: false,
+      prabhupadaLecture: false,
+      guruMaharajLecture: false,
+      mangalAartiAttended: false,
+    };
   };
 
-  const [sadhana, setSadhana] = useState({
-    date: new Date().toISOString().slice(0, 10), // Default to today's date
-    chantingCompleted: getCurrentTime(), // Default to current time
-    uid: user.uid, // User ID from Redux store
-    readingCompleted: false,
-    prabhupadaLecture: false,
-    guruMaharajLecture: false,
-    mangalAartiAttended: false,
-  });
+  const [sadhana, setSadhana] = useState(getInitialState());
 
   const handleToggle = (field) => {
     setSadhana((prevSadhana) => ({
@@ -30,12 +33,25 @@ const SadhanaForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await submitSadhanaDetails(sadhana);
+      await submitSadhanaDetails(sadhana);
       alert('Sadhana details submitted successfully!');
-      console.log('Response from API:', response);
+      setSadhana(getInitialState()); // Reset state after successful submission
     } catch (error) {
       alert('Failed to submit Sadhana details. Please try again later.');
     }
+  };
+
+  const handleDateChange = (e) => {
+    const newDate = e.target.value;
+    setSadhana((prevSadhana) => ({
+      ...prevSadhana,
+      date: newDate,
+    }));
+    // Reset state when the date changes
+    setSadhana((prevSadhana) => ({
+      ...getInitialState(),
+      date: newDate,
+    }));
   };
 
   return (
@@ -51,12 +67,7 @@ const SadhanaForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="date"
             value={sadhana.date}
-            onChange={(e) =>
-              setSadhana((prevSadhana) => ({
-                ...prevSadhana,
-                date: e.target.value,
-              }))
-            }
+            onChange={handleDateChange}
           />
         </div>
 
