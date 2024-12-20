@@ -5,6 +5,7 @@
   "homepage": "https://Prasad108.github.io/sadhana-tracker/",
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
+    "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "firebase": "^11.1.0",
     "react": "^19.0.0",

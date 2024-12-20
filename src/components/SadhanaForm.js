@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { submitSadhanaDetails } from '../api/api';
 
 const SadhanaForm = () => {
+  const user = useSelector((state) => state.auth.user);
+
   const getCurrentTime = () => {
     const now = new Date();
     return now.toISOString().slice(11, 16); // Format as "HH:MM"
@@ -9,6 +13,7 @@ const SadhanaForm = () => {
   const [sadhana, setSadhana] = useState({
     date: new Date().toISOString().slice(0, 10), // Default to today's date
     chantingCompleted: getCurrentTime(), // Default to current time
+    uid: user.uid, // User ID from Redux store
     readingCompleted: false,
     prabhupadaLecture: false,
     guruMaharajLecture: false,
@@ -22,10 +27,15 @@ const SadhanaForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Sadhana Details Submitted:', sadhana);
-    alert('Sadhana details submitted successfully!');
+    try {
+      const response = await submitSadhanaDetails(sadhana);
+      alert('Sadhana details submitted successfully!');
+      console.log('Response from API:', response);
+    } catch (error) {
+      alert('Failed to submit Sadhana details. Please try again later.');
+    }
   };
 
   return (
@@ -68,101 +78,32 @@ const SadhanaForm = () => {
           />
         </div>
 
-        {/* Reading Toggle */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Reading 10 min
-          </label>
-          <div className="flex items-center">
-            <div
-              className={`relative inline-block w-12 h-6 cursor-pointer ${
-                sadhana.readingCompleted ? 'bg-green-500' : 'bg-gray-300'
-              } rounded-full`}
-              onClick={() => handleToggle('readingCompleted')}
-            >
-              <span
-                className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transform transition-transform ${
-                  sadhana.readingCompleted ? 'translate-x-6' : ''
-                }`}
-              ></span>
+        {/* Toggles for Reading, Lectures, and Mangal Aarti */}
+        {[
+          { field: 'readingCompleted', label: 'Reading 10 min' },
+          { field: 'prabhupadaLecture', label: 'Srila Prabhupada Lecture Hearing' },
+          { field: 'guruMaharajLecture', label: 'Guru Maharaj Lecture Hearing' },
+          { field: 'mangalAartiAttended', label: 'Mangal Aarti Attended' },
+        ].map(({ field, label }) => (
+          <div className="mb-4" key={field}>
+            <label className="block text-gray-700 text-sm font-bold mb-2">{label}</label>
+            <div className="flex items-center">
+              <div
+                className={`relative inline-block w-12 h-6 cursor-pointer ${
+                  sadhana[field] ? 'bg-green-500' : 'bg-gray-300'
+                } rounded-full`}
+                onClick={() => handleToggle(field)}
+              >
+                <span
+                  className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transform transition-transform ${
+                    sadhana[field] ? 'translate-x-6' : ''
+                  }`}
+                ></span>
+              </div>
+              <span className="ml-4">{sadhana[field] ? 'Yes' : 'No'}</span>
             </div>
-            <span className="ml-4">
-              {sadhana.readingCompleted ? 'Yes' : 'No'}
-            </span>
           </div>
-        </div>
-
-        {/* Prabhupada Lecture Toggle */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Srila Prabhupada Lecture Hearing
-          </label>
-          <div className="flex items-center">
-            <div
-              className={`relative inline-block w-12 h-6 cursor-pointer ${
-                sadhana.prabhupadaLecture ? 'bg-green-500' : 'bg-gray-300'
-              } rounded-full`}
-              onClick={() => handleToggle('prabhupadaLecture')}
-            >
-              <span
-                className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transform transition-transform ${
-                  sadhana.prabhupadaLecture ? 'translate-x-6' : ''
-                }`}
-              ></span>
-            </div>
-            <span className="ml-4">
-              {sadhana.prabhupadaLecture ? 'Yes' : 'No'}
-            </span>
-          </div>
-        </div>
-
-        {/* Guru Maharaj Lecture Toggle */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Guru Maharaj Lecture Hearing
-          </label>
-          <div className="flex items-center">
-            <div
-              className={`relative inline-block w-12 h-6 cursor-pointer ${
-                sadhana.guruMaharajLecture ? 'bg-green-500' : 'bg-gray-300'
-              } rounded-full`}
-              onClick={() => handleToggle('guruMaharajLecture')}
-            >
-              <span
-                className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transform transition-transform ${
-                  sadhana.guruMaharajLecture ? 'translate-x-6' : ''
-                }`}
-              ></span>
-            </div>
-            <span className="ml-4">
-              {sadhana.guruMaharajLecture ? 'Yes' : 'No'}
-            </span>
-          </div>
-        </div>
-
-        {/* Mangal Aarti Attended Toggle */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Mangal Aarti Attended
-          </label>
-          <div className="flex items-center">
-            <div
-              className={`relative inline-block w-12 h-6 cursor-pointer ${
-                sadhana.mangalAartiAttended ? 'bg-green-500' : 'bg-gray-300'
-              } rounded-full`}
-              onClick={() => handleToggle('mangalAartiAttended')}
-            >
-              <span
-                className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transform transition-transform ${
-                  sadhana.mangalAartiAttended ? 'translate-x-6' : ''
-                }`}
-              ></span>
-            </div>
-            <span className="ml-4">
-              {sadhana.mangalAartiAttended ? 'Yes' : 'No'}
-            </span>
-          </div>
-        </div>
+        ))}
 
         {/* Submit Button */}
         <div className="mb-4">
